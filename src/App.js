@@ -5,7 +5,8 @@ import LoginWindow from "./components/loginWindow";
 function App() {
   return (
     <div className="App">
-      <HeaderBar></HeaderBar>
+      {/* <HeaderBar></HeaderBar> */}
+      <LoginWindow></LoginWindow>
     </div>
   );
 }

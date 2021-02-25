@@ -10,6 +10,7 @@ import {
 import mainBgImg from "./img/banner-bg.jpg";
 import ReactPlayer from "react-player";
 // import "bootstrap/dist/css/bootstrap.css";
+import "./css/headbar.css";
 
 class HeaderBar extends Component {
   state = {
@@ -28,7 +29,7 @@ class HeaderBar extends Component {
   render() {
     return (
       <div>
-        <Navbar sticky="top" bg="dark" variant="dark">
+        <Navbar fixed="top" bg="dark" variant="dark">
           <Navbar.Brand href="#home">Dream Build</Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link href="#home">Home</Nav.Link>
@@ -56,15 +57,16 @@ class HeaderBar extends Component {
             <Button variant="outline-info">Search</Button>
           </Form>
         </Navbar>
-        <div>
-          <img style={{ zIndex: 1 }} className="w-100" src={mainBgImg}></img>
-          <p
-            style={{
-              zIndex: 10,
-            }}
-          >
-            Hello this is ddd text
-          </p>
+
+        <div className="article">
+          <img src={mainBgImg} className="article-bg w-100 h-100" />
+          {/* <h1 class="heading">Article Heading</h1>
+          <h2 class="author">Author Name</h2>
+          <div style={{ position: "absolute", zIndex: 900, top: 300 }}>
+            <p>ABCD</p>
+            <p>ABCD</p>
+            <p>ABCD</p>
+          </div> */}
         </div>
       </div>
     );
