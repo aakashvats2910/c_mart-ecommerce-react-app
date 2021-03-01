@@ -3,6 +3,7 @@ import HeaderBar from "./headerbar";
 import "./css/loginwindow.css";
 import loginImg from "./img/login.jpg";
 import { Form, Button } from "react-bootstrap";
+import bgComputerImg from "./img/bg_computer.jpg";
 
 class LoginWindow extends Component {
   state = {};
@@ -27,30 +28,6 @@ class LoginWindow extends Component {
             }}
             className="w-70"
           >
-            {/* <div className="w-35 article">
-              <img src={loginImg} className="article-bg w-100 h-100" />
-              <div
-                style={{
-                  position: "absolute",
-                  zIndex: 900,
-                  top: 0,
-                  backgroundColor: "rgba(0, 0, 0, 0.5)",
-                }}
-                className="w-100 h-100"
-              >
-                <h1 className="login-padding">Login</h1>
-                <p
-                  style={{
-                    padding: 70,
-                    paddingTop: 20,
-                  }}
-                >
-                  No worries, we got you covered. Just sign in without your
-                  credentials and save your preferences.
-                </p>
-              </div>
-            </div> */}
-
             <div
               className="w-50"
               style={{
@@ -59,7 +36,7 @@ class LoginWindow extends Component {
               }}
             >
               <div className="image">
-                <img className="article-bg w-100" src={loginImg} alt="" />
+                <img className="article-bg w-100" src={bgComputerImg} alt="" />
 
                 <div
                   style={{
@@ -117,7 +94,7 @@ class LoginWindow extends Component {
               <div className="image">
                 <img
                   className="article-bg w-100"
-                  src={loginImg}
+                  src={bgComputerImg}
                   style={{ visibility: "hidden" }}
                   alt=""
                 />

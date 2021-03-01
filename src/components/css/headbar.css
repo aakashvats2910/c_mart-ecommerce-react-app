@@ -16,3 +16,15 @@
   z-index: 900;
   color: #fff;
 }
+
+.hw {
+  height: 100%;
+  width: 100%;
+}
+
+body {
+  background-image: url("../img/banner-bg.jpg");
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}

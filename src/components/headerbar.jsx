@@ -11,6 +11,7 @@ import mainBgImg from "./img/banner-bg.jpg";
 import ReactPlayer from "react-player";
 // import "bootstrap/dist/css/bootstrap.css";
 import "./css/headbar.css";
+import logoImg from "./img/logo.png";
 
 class HeaderBar extends Component {
   state = {
@@ -30,7 +31,16 @@ class HeaderBar extends Component {
     return (
       <div>
         <Navbar fixed="top" bg="dark" variant="dark">
-          <Navbar.Brand href="#home">Dream Build</Navbar.Brand>
+          <Navbar.Brand href="#home">
+            <img
+              alt=""
+              src={logoImg}
+              width="30"
+              height="30"
+              className="d-inline-block align-top"
+            />{" "}
+            Cmart
+          </Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link href="#home">Home</Nav.Link>
             <NavDropdown title="Shop" id="collasible-nav-dropdown">
@@ -58,16 +68,16 @@ class HeaderBar extends Component {
           </Form>
         </Navbar>
 
-        <div className="article">
-          <img src={mainBgImg} className="article-bg w-100 h-100" />
-          {/* <h1 class="heading">Article Heading</h1>
+        {/* <div className="article">
+          <img src={mainBgImg} className="article-bg hw" />
+          <h1 class="heading">Article Heading</h1>
           <h2 class="author">Author Name</h2>
           <div style={{ position: "absolute", zIndex: 900, top: 300 }}>
             <p>ABCD</p>
             <p>ABCD</p>
             <p>ABCD</p>
-          </div> */}
-        </div>
+          </div>
+        </div> */}
       </div>
     );
   }

@@ -1,0 +1,31 @@
+/* body {
+  background-image: url("../img/banner-bg.jpg");
+} */
+
+.car-item {
+  margin-top: 30%;
+}
+
+.banner-image {
+  height: 500px;
+  width: 700px;
+  margin-bottom: 100px;
+  /* max-height: 200px;
+  max-width: 200px; */
+}
+
+.second-image {
+  height: 500px;
+  width: 700px;
+  padding: 20px;
+  margin-right: 0%;
+  margin-bottom: 100px;
+}
+
+.third-image {
+  height: 500px;
+  width: 700px;
+  padding: 20px;
+  margin-right: 0%;
+  margin-bottom: 100px;
+}
