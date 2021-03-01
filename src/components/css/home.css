@@ -29,3 +29,21 @@
   margin-right: 0%;
   margin-bottom: 100px;
 }
+
+.card-mage {
+  margin-left: 42%;
+}
+
+.card-lay {
+  margin-left: 5%;
+  margin-right: 5%;
+}
+
+.items-container {
+  margin-left: 20%;
+}
+
+.icon-image {
+  height: 20px;
+  width: 20px;
+}
