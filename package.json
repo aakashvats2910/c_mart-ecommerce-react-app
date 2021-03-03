@@ -9,6 +9,7 @@
     "bootstrap": "^4.6.0",
     "express": "^4.17.1",
     "mdbootstrap": "^4.19.2",
+    "mdbreact": "^5.0.1",
     "mongodb": "^3.6.4",
     "mongoose": "^5.11.18",
     "navbar-react": "^1.0.4",

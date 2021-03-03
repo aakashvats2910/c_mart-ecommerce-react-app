@@ -13,6 +13,7 @@ import {
   Form,
   FormControl,
   InputGroup,
+  ButtonGroup,
 } from "react-bootstrap";
 import { CardGroup, Card } from "react-bootstrap";
 import bannerOneImg from "./img/banner/bannerone.png";
@@ -41,129 +42,149 @@ class HomeWindow extends Component {
           <FeaturesContainer></FeaturesContainer>
           <SmallCategory></SmallCategory>
           <HorizontalLine></HorizontalLine>
-          <SaleItemsFragment></SaleItemsFragment>
-
           <Container
-            fluid
             style={{
-              backgroundColor: "rgba(34,34,34,255)",
-              color: "rgba(105,109,99,255)",
-              paddingBottom: 50,
-              paddingTop: 100,
+              paddingBottom: 10,
+              backgroundColor: "rgba(246,246,246, 1)",
             }}
+            fluid
           >
-            <Container
+            <p
               style={{
-                textAlign: "left",
+                fontSize: 50,
+                color: "#ff0000",
               }}
+              className="font-weight-bold gradient-text"
             >
-              <Row>
-                <Col>
-                  <p class="font-weight-bold text-light">About Us</p>
-                  <p class="font-weight-normal text-muted">
-                    Cmart is dedicated to 100% customer delight ensuring that
-                    everything from placing your order to delivering it right to
-                    your doorstep is smooth and hassle-free.
-                  </p>
-                </Col>
-                <Col>
-                  <p class="font-weight-bold text-light">Newsletter</p>
-                  <p class="font-weight-normal text-muted">
-                    Stay update with our latest news
-                  </p>
-                  <Form>
-                    <InputGroup className="mb-2">
-                      <InputGroup.Prepend>
-                        <InputGroup.Text>@</InputGroup.Text>
-                      </InputGroup.Prepend>
-                      <FormControl
-                        id="inlineFormInputGroup"
-                        placeholder="Email"
-                      />
-                    </InputGroup>
-                    <Button variant="dark">Submit</Button>
-                  </Form>
-                </Col>
-                <Col>
-                  <p class="font-weight-bold text-light">Contact Us</p>
-                  <p class="font-weight-normal text-muted">Contact us here</p>
-                  <Form>
-                    <Col>
-                      {/* <img
-                        src="/img/icons/placeholder.png"
-                        className="icon-image"
-                      ></img> */}
-
-                      <Row
-                        style={{
-                          marginBottom: 10,
-                        }}
-                      >
-                        <Col sm={1}>
-                          <img
-                            src="/img/icons/placeholder.png"
-                            className="icon-image"
-                          ></img>
-                        </Col>
-                        <Col className="text-light" sm={4}>
-                          MMDU(Mullana), Ambala
-                        </Col>
-                      </Row>
-
-                      <Row
-                        style={{
-                          marginBottom: 10,
-                        }}
-                      >
-                        <Col sm={1}>
-                          <img
-                            src="/img/icons/email.png"
-                            className="icon-image"
-                          ></img>
-                        </Col>
-                        <Col className="text-light" sm={4}>
-                          aakashvats2910@gmail.com
-                        </Col>
-                      </Row>
-
-                      <Row
-                        style={{
-                          marginBottom: 10,
-                        }}
-                      >
-                        <Col sm={1}>
-                          <img
-                            src="/img/icons/phone.png"
-                            className="icon-image"
-                          ></img>
-                        </Col>
-                        <Col className="text-light" sm={4}>
-                          (+91)7494970025
-                        </Col>
-                      </Row>
-                    </Col>
-                  </Form>
-                </Col>
-                <Col>
-                  <p class="font-weight-bold text-light">Policies</p>
-                  <p class="font-weight-normal text-muted">
-                    Policies of our store
-                  </p>
-                  <Button variant="link">> Privacy Policy</Button>
-                  <Button variant="link">> Refund Policy</Button>
-                  <Button variant="link">> Shipping Policy</Button>
-                  <Button variant="link">> Terms & Conditions</Button>
-                </Col>
-              </Row>
-              <Row>
-                <p>
-                  Copyright © 2021 All rights reserved by Cmart online store
-                </p>
-              </Row>
-            </Container>
+              Hot Deals!
+            </p>
           </Container>
+          <SaleItemsFragment></SaleItemsFragment>
+          <FooterFragment></FooterFragment>
         </div>
       </div>
+    );
+  }
+}
+
+class FooterFragment extends Component {
+  state = {};
+  render() {
+    return (
+      <Container
+        fluid
+        style={{
+          backgroundColor: "rgba(34,34,34,255)",
+          color: "rgba(105,109,99,255)",
+          paddingBottom: 50,
+          paddingTop: 100,
+        }}
+      >
+        <Container
+          style={{
+            textAlign: "left",
+          }}
+        >
+          <Row>
+            <Col>
+              <p className="font-weight-bold text-light">About Us</p>
+              <p className="font-weight-normal text-muted">
+                Cmart is dedicated to 100% customer delight ensuring that
+                everything from placing your order to delivering it right to
+                your doorstep is smooth and hassle-free.
+              </p>
+            </Col>
+            <Col>
+              <p className="font-weight-bold text-light">Newsletter</p>
+              <p className="font-weight-normal text-muted">
+                Stay update with our latest news
+              </p>
+              <Form>
+                <InputGroup className="mb-2">
+                  <InputGroup.Prepend>
+                    <InputGroup.Text>@</InputGroup.Text>
+                  </InputGroup.Prepend>
+                  <FormControl id="inlineFormInputGroup" placeholder="Email" />
+                </InputGroup>
+                <Button variant="dark">Submit</Button>
+              </Form>
+            </Col>
+            <Col>
+              <p className="font-weight-bold text-light">Contact Us</p>
+              <p className="font-weight-normal text-muted">Contact us here</p>
+              <Form>
+                <Col>
+                  {/* <img
+                  src="/img/icons/placeholder.png"
+                  className="icon-image"
+                ></img> */}
+
+                  <Row
+                    style={{
+                      marginBottom: 10,
+                    }}
+                  >
+                    <Col sm={1}>
+                      <img
+                        src="/img/icons/placeholder.png"
+                        className="icon-image"
+                      ></img>
+                    </Col>
+                    <Col className="text-light" sm={4}>
+                      MMDU(Mullana), Ambala
+                    </Col>
+                  </Row>
+
+                  <Row
+                    style={{
+                      marginBottom: 10,
+                    }}
+                  >
+                    <Col sm={1}>
+                      <img
+                        src="/img/icons/email.png"
+                        className="icon-image"
+                      ></img>
+                    </Col>
+                    <Col className="text-light" sm={4}>
+                      aakashvats2910@gmail.com
+                    </Col>
+                  </Row>
+
+                  <Row
+                    style={{
+                      marginBottom: 10,
+                    }}
+                  >
+                    <Col sm={1}>
+                      <img
+                        src="/img/icons/phone.png"
+                        className="icon-image"
+                      ></img>
+                    </Col>
+                    <Col className="text-light" sm={4}>
+                      (+91)7494970025
+                    </Col>
+                  </Row>
+                </Col>
+              </Form>
+            </Col>
+            <Col>
+              <p className="font-weight-bold text-light">Policies</p>
+              <p className="font-weight-normal text-muted">
+                Policies of our store
+              </p>
+              <Button variant="link">> Privacy Policy</Button>
+              <Button variant="link">> Refund Policy</Button>
+              <Button variant="link">> Shipping Policy</Button>
+              <Button variant="link">> Terms & Conditions</Button>
+            </Col>
+          </Row>
+          <Row>
+            <p>Copyright © 2021 All rights reserved by Cmart online store</p>
+          </Row>
+        </Container>
+      </Container>
     );
   }
 }
@@ -212,11 +233,29 @@ class SaleItemsFragment extends Component {
                 />
                 <Card.Body>
                   <Card.Title>Intel i7 10th Gen Sale</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>
@@ -230,11 +269,99 @@ class SaleItemsFragment extends Component {
                 />
                 <Card.Body>
                   <Card.Title>Intel i7 10th Gen Sale</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
+                </Card.Body>
+                <Card.Footer>
+                  <small className="text-muted">Sale ends on 31st March</small>
+                </Card.Footer>
+              </Card>
+              <Card>
+                <Card.Img
+                  variant="top"
+                  src="/img/banner/intel_i_seven_tenth.png"
+                />
+                <Card.Body>
+                  <Card.Title>Intel i7 10th Gen Sale</Card.Title>
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
+                  </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
+                </Card.Body>
+                <Card.Footer>
+                  <small className="text-muted">Sale ends on 31st March</small>
+                </Card.Footer>
+              </Card>
+              <Card>
+                <Card.Img
+                  variant="top"
+                  src="/img/banner/intel_i_seven_tenth.png"
+                />
+                <Card.Body>
+                  <Card.Title>Intel i7 10th Gen Sale</Card.Title>
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
+                  </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>
@@ -248,47 +375,29 @@ class SaleItemsFragment extends Component {
                 />
                 <Card.Body>
                   <Card.Title>Intel i7 10th Gen Sale</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <small className="text-muted">Sale ends on 31st March</small>
-                </Card.Footer>
-              </Card>
-
-              <Card>
-                <Card.Img
-                  variant="top"
-                  src="/img/banner/intel_i_seven_tenth.png"
-                />
-                <Card.Body>
-                  <Card.Title>Intel i7 10th Gen Sale</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
-                  </Card.Text>
-                </Card.Body>
-                <Card.Footer>
-                  <small className="text-muted">Sale ends on 31st March</small>
-                </Card.Footer>
-              </Card>
-
-              <Card>
-                <Card.Img
-                  variant="top"
-                  src="/img/banner/intel_i_seven_tenth.png"
-                />
-                <Card.Body>
-                  <Card.Title>Intel i7 10th Gen Sale</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
-                  </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>
@@ -296,77 +405,164 @@ class SaleItemsFragment extends Component {
               </Card>
             </CardDeck>
           </Carousel.Item>
+
           <Carousel.Item>
             <CardDeck>
               <Card>
                 <Card.Img variant="top" src="/img/banner/gpudemo.png" />
                 <Card.Body>
                   <Card.Title>Geforce GPU</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>
                 </Card.Footer>
               </Card>
-
               <Card>
                 <Card.Img variant="top" src="/img/banner/gpudemo.png" />
                 <Card.Body>
                   <Card.Title>Geforce GPU</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>
                 </Card.Footer>
               </Card>
-
               <Card>
                 <Card.Img variant="top" src="/img/banner/gpudemo.png" />
                 <Card.Body>
                   <Card.Title>Geforce GPU</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>
                 </Card.Footer>
               </Card>
-
               <Card>
                 <Card.Img variant="top" src="/img/banner/gpudemo.png" />
                 <Card.Body>
                   <Card.Title>Geforce GPU</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>
                 </Card.Footer>
               </Card>
-
               <Card>
                 <Card.Img variant="top" src="/img/banner/gpudemo.png" />
                 <Card.Body>
                   <Card.Title>Geforce GPU</Card.Title>
-                  <Card.Text>
-                    This is a wider card with supporting text below as a natural
-                    lead-in to additional content. This content is a little bit
-                    longer.
+                  <Card.Text
+                    style={{
+                      color: "rgba(42, 187, 155, 1)",
+                    }}
+                  >
+                    ₹ 20,000{" "}
+                    <span
+                      style={{
+                        color: "rgba(255,0,0,1)",
+                      }}
+                    >
+                      &nbsp;&nbsp;&nbsp;₹ <del>35,000</del>{" "}
+                    </span>
                   </Card.Text>
+                  <Button
+                    variant="danger"
+                    style={{
+                      marginRight: 10,
+                    }}
+                  >
+                    <img src="/img/icons/heart.png" className="icon-image" />
+                  </Button>
+                  <Button variant="link">Buy now</Button>
                 </Card.Body>
                 <Card.Footer>
                   <small className="text-muted">Sale ends on 31st March</small>

@@ -47,3 +47,11 @@
   height: 20px;
   width: 20px;
 }
+
+.gradient-text {
+  background: linear-gradient(to right, #2193b0 30%, #6dd5ed 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-size: 20vw;
+  font-family: "Poppins", sans-serif;
+}
