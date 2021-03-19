@@ -10,6 +10,7 @@ import FooterFragment from "./components/footerFragment";
 import { BrowserRouter, Route, Link, Switch } from "react-router-dom";
 import CategoryWindow from "./components/categoryWindow";
 import AdminWindow from "./components/adminWindow";
+import firebase, { Fire } from "./components/backend/firebase";
 
 const HomeRoute = () => (
   <div>

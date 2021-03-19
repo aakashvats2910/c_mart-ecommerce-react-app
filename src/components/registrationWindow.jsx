@@ -5,6 +5,7 @@ import { Form, Button, Col, InputGroup, FormControl } from "react-bootstrap";
 import bgDesertImg from "./img/backgrounddesert.jpg";
 import bgMontImg from "./img/backgroundmont.jpg";
 import "./js/connection.js";
+import { Fire } from "../components/backend/firebase";
 
 class RegistrationWindow extends Component {
   state = {};
@@ -66,6 +67,29 @@ class RegistrationWindowFragment extends React.Component {
       zip: "",
     };
     this.onRegisterButtonClick = this.onRegisterButtonClick.bind(this);
+  }
+
+  onRegisterButtonClick() {
+    // console.log("WOW");
+    // console.log(this.state);
+    // console.log(this.state.firstName);
+    // console.log(this.state.lastName);
+    // console.log(this.state.email);
+    // console.log(this.state.mobileNumber);
+    // run().catch(console.dir);
+    console.log(this.state);
+    Fire.addUserInDB(
+      this.state.email,
+      this.state.passwd,
+      this.state.firstName,
+      this.state.lastName,
+      this.state.mobileNumber,
+      this.state.addOne,
+      this.state.addTwo,
+      this.state.city,
+      this.state.state,
+      this.state.zip
+    );
   }
 
   //   state = {
@@ -138,34 +162,6 @@ class RegistrationWindowFragment extends React.Component {
 
   handleZipChange(zip) {
     this.state.zip = zip;
-  }
-
-  onRegisterButtonClick() {
-    // console.log("WOW");
-    // console.log(this.state);
-    // console.log(this.state.firstName);
-    // console.log(this.state.lastName);
-    // console.log(this.state.email);
-    // console.log(this.state.mobileNumber);
-    const { MongoClient } = require("mongodb");
-    // Connection URI
-    const uri =
-      "mongodb+srv://sample-hostname:27017/?poolSize=20&writeConcern=majority";
-    // Create a new MongoClient
-    const client = new MongoClient(uri);
-    async function run() {
-      try {
-        // Connect the client to the server
-        await client.connect();
-        // Establish and verify connection
-        await client.db("admin").command({ ping: 1 });
-        console.log("Connected successfully to server");
-      } finally {
-        // Ensures that the client will close when you finish/error
-        await client.close();
-      }
-    }
-    // run().catch(console.dir);
   }
 
   render() {

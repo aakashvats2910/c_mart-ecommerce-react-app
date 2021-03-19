@@ -4,6 +4,7 @@ import "./css/loginwindow.css";
 import loginImg from "./img/login.jpg";
 import { Form, Button } from "react-bootstrap";
 import bgComputerImg from "./img/bg_computer.jpg";
+import { Fire } from "../components/backend/firebase";
 
 class LoginWindow extends Component {
   state = {};
