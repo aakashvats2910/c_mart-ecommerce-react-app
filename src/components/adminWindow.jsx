@@ -3,6 +3,23 @@ import { Container, Row, Col, Form, Button } from "react-bootstrap";
 import HeaderBar from "./headerbar";
 
 class AdminWindow extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      category: "",
+      description: "",
+      price: "",
+      discountP: "",
+      imageThousand: "",
+      otherImages: "",
+    };
+  }
+
+  onSubmitButtonClick() {
+    console.log("Submit button clicked!");
+  }
+
   state = {};
   render() {
     return (
@@ -78,7 +95,7 @@ class AdminWindow extends Component {
 
                 <Form.Group controlId="formBasicProductCategory">
                   <Form.Label>Product Category</Form.Label>
-                  <Form.Control type="password" placeholder="Category" />
+                  <Form.Control type="text" placeholder="Category" />
                   <Form.Text className="text-muted">
                     This will be the category of the product which will help
                     customer to get the product when he/she searches for a
@@ -88,7 +105,7 @@ class AdminWindow extends Component {
 
                 <Form.Group controlId="formBasicProductDesc">
                   <Form.Label>Product Description</Form.Label>
-                  <Form.Control type="password" placeholder="Description" />
+                  <Form.Control type="text" placeholder="Description" />
                   <Form.Text className="text-muted">
                     This will give the brief details about the product.
                   </Form.Text>
@@ -96,7 +113,7 @@ class AdminWindow extends Component {
 
                 <Form.Group controlId="formBasicProductPrice">
                   <Form.Label>Price</Form.Label>
-                  <Form.Control type="password" placeholder="Price" />
+                  <Form.Control type="text" placeholder="Price" />
                   <Form.Text className="text-muted">
                     This is the base price for the product.
                   </Form.Text>
@@ -104,7 +121,7 @@ class AdminWindow extends Component {
 
                 <Form.Group controlId="formBasicProductDiscountPercent">
                   <Form.Label>Discount Percentage</Form.Label>
-                  <Form.Control type="password" placeholder="Price" />
+                  <Form.Control type="text" placeholder="Price" />
                   <Form.Text className="text-muted">
                     This is the percent of the discount which will be given on
                     the original price.
@@ -113,7 +130,7 @@ class AdminWindow extends Component {
 
                 <Form.Group controlId="formBasicProductThousandResImg">
                   <Form.Label>Add Image (1000x1000) resolution</Form.Label>
-                  <Form.Control type="password" placeholder="Price" />
+                  <Form.Control type="text" placeholder="Price" />
                   <Form.Text className="text-muted">
                     This is the percent of the discount which will be given on
                     the original price.
@@ -125,14 +142,18 @@ class AdminWindow extends Component {
                     Add Image (960x1080) resolution (Multiple images allowed
                     with , between them)
                   </Form.Label>
-                  <Form.Control type="password" placeholder="Price" />
+                  <Form.Control type="text" placeholder="Price" />
                   <Form.Text className="text-muted">
                     This is the percent of the discount which will be given on
                     the original price.
                   </Form.Text>
                 </Form.Group>
 
-                <Button variant="primary" type="submit">
+                <Button
+                  variant="primary"
+                  type="button"
+                  onClick={this.onSubmitButtonClick}
+                >
                   Submit
                 </Button>
               </Form>

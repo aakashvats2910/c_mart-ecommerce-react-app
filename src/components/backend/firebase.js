@@ -31,28 +31,6 @@ export class Fire {
     });
   }
 
-  static addUserInDB(email, password, details) {
-    firebase
-      .auth()
-      .createUserWithEmailAndPassword(email, password)
-      .then((userCredential) => {
-        // Signed in
-        var user = userCredential.user;
-        firebase
-          .firestore()
-          .collection("users")
-          .doc(userCredential.user.uid)
-          .set(details);
-        // ...
-      })
-      .catch((error) => {
-        var errorCode = error.code;
-        var errorMessage = error.message;
-        console.log(error);
-        // ..
-      });
-  }
-
   static addUserInDB(
     email_,
     passwd_,
@@ -96,6 +74,16 @@ export class Fire {
         // ..
       });
   }
+
+  static addProductInDB(
+    name,
+    category,
+    description,
+    price,
+    discountP,
+    thousandImage,
+    otherImages
+  ) {}
 }
 
 export default firebase;
