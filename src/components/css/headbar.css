@@ -28,3 +28,9 @@ body {
   background-attachment: fixed;
   background-size: cover;
 }
+
+.gbs {
+  width: 30px;
+  height: 30px;
+  padding: 0px;
+}

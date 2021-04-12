@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import { Container, Row, Col, Form, Button } from "react-bootstrap";
+import { Fire } from "./backend/firebase";
+import Product from "./backend/productClass";
 import HeaderBar from "./headerbar";
 
 class AdminWindow extends Component {
@@ -13,11 +15,77 @@ class AdminWindow extends Component {
       discountP: "",
       imageThousand: "",
       otherImages: "",
+      value: "",
     };
+    this.onSubmitButtonClick = this.onSubmitButtonClick.bind(this);
+    this.handleChange = this.handleChange.bind(this);
+    this.handleProductPrice = this.handleProductPrice.bind(this);
+  }
+
+  handleChange(event) {
+    this.setState({ value: event.target.value });
   }
 
   onSubmitButtonClick() {
     console.log("Submit button clicked!");
+    console.log(this.state);
+    Fire.addProductInDB(
+      this.state.name,
+      this.state.category,
+      this.state.description,
+      this.state.price,
+      this.state.discountP,
+      this.state.imageThousand,
+      this.state.imageThousand,
+      this.state.otherImages
+    );
+  }
+
+  handleProductName(pName) {
+    this.state.name = pName;
+  }
+
+  handleProductCategory(pCategory) {
+    this.state.category = pCategory;
+  }
+
+  handleProductDescription(pDescription) {
+    this.state.description = pDescription;
+  }
+
+  handleProductPrice(event) {
+    let price_string = event.target.value;
+
+    // check if string contains any letters or special characters (except for comma)
+
+    price_string = price_string.replaceAll(",", "");
+    console.log("before : " + price_string);
+    price_string = this.convertNumberToIndianFormat(price_string);
+    console.log("after : " + price_string);
+    this.setState({ price: price_string });
+    // this.state.tempPrice = this.state.tempPrice + "--";
+  }
+
+  convertNumberToIndianFormat(number_string) {
+    var x = number_string;
+    x = x.toString();
+    var lastThree = x.substring(x.length - 3);
+    var otherNumbers = x.substring(0, x.length - 3);
+    if (otherNumbers != "") lastThree = "," + lastThree;
+    var res = otherNumbers.replace(/\B(?=(\d{2})+(?!\d))/g, ",") + lastThree;
+    return res;
+  }
+
+  handleDiscountPercentage(pDiscountP) {
+    this.state.discountP = pDiscountP;
+  }
+
+  handleImageThousandRes(pImageThousand) {
+    this.state.imageThousand = pImageThousand;
+  }
+
+  handleOtherImages(pOtherImages) {
+    this.state.otherImages = pOtherImages;
   }
 
   state = {};
@@ -77,16 +145,27 @@ class AdminWindow extends Component {
                   <Form.Label column lg={2}>
                     Product ID
                   </Form.Label>
-                  <Col>
+                  <Col xs={6}>
                     <Form.Control type="text" placeholder="Product ID" />
+                  </Col>
+                  <Col>
+                    <Button variant="warning" type="button">
+                      Search
+                    </Button>
                   </Col>
                 </Form.Row>
               </Container>
 
               <Form>
                 <Form.Group controlId="formBasicProductName">
-                  <Form.Label>Product Name</Form.Label>
-                  <Form.Control type="email" placeholder="Product Name" />
+                  <Form.Label>Product Name *</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Product Name"
+                    onChange={(event) =>
+                      this.handleProductName(event.target.value)
+                    }
+                  />
                   <Form.Text className="text-muted">
                     This will be the main title which will pe presented to the
                     customer for a product.
@@ -94,8 +173,14 @@ class AdminWindow extends Component {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicProductCategory">
-                  <Form.Label>Product Category</Form.Label>
-                  <Form.Control type="text" placeholder="Category" />
+                  <Form.Label>Product Category *</Form.Label>
+                  <Form.Control
+                    onChange={(event) =>
+                      this.handleProductCategory(event.target.value)
+                    }
+                    type="text"
+                    placeholder="Category"
+                  />
                   <Form.Text className="text-muted">
                     This will be the category of the product which will help
                     customer to get the product when he/she searches for a
@@ -104,16 +189,29 @@ class AdminWindow extends Component {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicProductDesc">
-                  <Form.Label>Product Description</Form.Label>
-                  <Form.Control type="text" placeholder="Description" />
+                  <Form.Label>Product Description *</Form.Label>
+                  <Form.Control
+                    onChange={(event) =>
+                      this.handleProductDescription(event.target.value)
+                    }
+                    type="text"
+                    placeholder="Description"
+                  />
                   <Form.Text className="text-muted">
                     This will give the brief details about the product.
                   </Form.Text>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicProductPrice">
-                  <Form.Label>Price</Form.Label>
-                  <Form.Control type="text" placeholder="Price" />
+                  <Form.Label>Price *</Form.Label>
+                  <Form.Control
+                    onChange={this.handleProductPrice}
+                    type="text"
+                    placeholder="Price"
+                    value={this.state.price}
+                    // value={this.state.value}
+                    // onChange={this.handleChange}
+                  />
                   <Form.Text className="text-muted">
                     This is the base price for the product.
                   </Form.Text>
@@ -121,7 +219,13 @@ class AdminWindow extends Component {
 
                 <Form.Group controlId="formBasicProductDiscountPercent">
                   <Form.Label>Discount Percentage</Form.Label>
-                  <Form.Control type="text" placeholder="Price" />
+                  <Form.Control
+                    onChange={(event) =>
+                      this.handleDiscountPercentage(event.target.value)
+                    }
+                    type="text"
+                    placeholder="Percentage of discount (0 < value < 100), default value is 0"
+                  />
                   <Form.Text className="text-muted">
                     This is the percent of the discount which will be given on
                     the original price.
@@ -129,20 +233,28 @@ class AdminWindow extends Component {
                 </Form.Group>
 
                 <Form.Group controlId="formBasicProductThousandResImg">
-                  <Form.Label>Add Image (1000x1000) resolution</Form.Label>
-                  <Form.Control type="text" placeholder="Price" />
+                  <Form.Label>Add Image (1000x1000) resolution *</Form.Label>
+                  <Form.Control
+                    onChange={(event) =>
+                      this.handleImageThousandRes(event.target.value)
+                    }
+                    type="text"
+                    placeholder="Url of image of 1000x1000 resolution"
+                  />
                   <Form.Text className="text-muted">
-                    This is the percent of the discount which will be given on
-                    the original price.
+                    Add Image (1000x1000) resolution
                   </Form.Text>
                 </Form.Group>
 
                 <Form.Group controlId="formBasicProductMultImg">
-                  <Form.Label>
-                    Add Image (960x1080) resolution (Multiple images allowed
-                    with , between them)
-                  </Form.Label>
-                  <Form.Control type="text" placeholder="Price" />
+                  <Form.Label>Add Image (960x1080) resolution *</Form.Label>
+                  <Form.Control
+                    onChange={(event) =>
+                      this.handleOtherImages(event.target.value)
+                    }
+                    type="text"
+                    placeholder="Other Images url (Multiple url separated by comma)"
+                  />
                   <Form.Text className="text-muted">
                     This is the percent of the discount which will be given on
                     the original price.
@@ -150,7 +262,7 @@ class AdminWindow extends Component {
                 </Form.Group>
 
                 <Button
-                  variant="primary"
+                  variant="success"
                   type="button"
                   onClick={this.onSubmitButtonClick}
                 >

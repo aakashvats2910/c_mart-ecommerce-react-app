@@ -12,11 +12,21 @@ import ReactPlayer from "react-player";
 // import "bootstrap/dist/css/bootstrap.css";
 import "./css/headbar.css";
 import logoImg from "./img/logo.png";
+import { Fire } from "./backend/firebase";
 
 class HeaderBar extends Component {
+  constructor(props) {
+    super(props);
+
+    Fire.passHeaderBarInstance(this);
+    // Fire.addAuthChangedListener();
+    this.handleLoginProcess = this.handleLoginProcess.bind(this);
+  }
+
   state = {
     headerheight: 65,
     headerTextSize: 20,
+    buttonText: "Login with Goggle",
   };
 
   headerLinkStyle = {
@@ -27,11 +37,21 @@ class HeaderBar extends Component {
     textTransform: "uppercase",
   };
 
+  handleLoginProcess() {
+    if (this.state.buttonText.includes("Logout")) {
+      Fire.logout();
+    } else {
+      var uid = Fire.loginWithGoogle();
+      console.log("()()()() UID : " + uid);
+      // this.setState({ buttonText: "Aakash Sharma" });
+    }
+  }
+
   render() {
     return (
       <div>
         <Navbar fixed="top" bg="dark" variant="dark">
-          <Navbar.Brand href="#home">
+          <Navbar.Brand href="home">
             <img
               alt=""
               src={logoImg}
@@ -59,12 +79,22 @@ class HeaderBar extends Component {
               </NavDropdown.Item>
             </NavDropdown>
             <Nav.Link href="#pricing">My Orders</Nav.Link>
-            <Nav.Link href="#login">Login</Nav.Link>
+
             <Nav.Link href="#contactus">Contact Us</Nav.Link>
           </Nav>
           <Form inline>
             <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-info">Search</Button>
+            <Button variant="outline-light">Search</Button>
+
+            <Button
+              variant="outline-info"
+              style={{
+                marginLeft: 50,
+              }}
+              onClick={this.handleLoginProcess}
+            >
+              {this.state.buttonText}
+            </Button>
           </Form>
         </Navbar>
 

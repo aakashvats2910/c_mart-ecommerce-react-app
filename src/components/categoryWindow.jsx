@@ -127,7 +127,7 @@ class CategoryWindow extends Component {
                   fluid
                 >
                   <CategoryProductRow></CategoryProductRow>
-                  <CategoryProductRow></CategoryProductRow>
+                  {/* <CategoryProductRow></CategoryProductRow> */}
                 </Container>
               </Col>
             </Row>

@@ -2,12 +2,34 @@ import React, { Component } from "react";
 import HeaderBar from "./headerbar";
 import "./css/loginwindow.css";
 import loginImg from "./img/login.jpg";
-import { Form, Button } from "react-bootstrap";
+import { Form, Button, InputGroup, FormControl } from "react-bootstrap";
 import bgComputerImg from "./img/bg_computer.jpg";
 import { Fire } from "../components/backend/firebase";
 
 class LoginWindow extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    this.state = {
+      email: "",
+      password: "",
+    };
+    this.onLoginButtonClick = this.onLoginButtonClick.bind(this);
+  }
+
+  handleEmailChange(email_) {
+    this.state.email = email_;
+  }
+
+  handlePasswordChange(password_) {
+    this.state.password = password_;
+  }
+
+  onLoginButtonClick() {
+    console.log(this.state);
+    // Fire.loginUser(this.state.email, this.state.password);
+    Fire.loginWithGoogle();
+  }
+
   render() {
     return (
       <div>
@@ -107,9 +129,24 @@ class LoginWindow extends Component {
                 </h2> */}
 
                 <Form className="form-style">
-                  <Form.Group controlId="formBasicEmail">
+                  <InputGroup className="mb-2">
+                    <Button variant="light">
+                      <img
+                        src="/img/icons/googlelogo.png"
+                        className="gbs"
+                      ></img>
+                      Login with Google
+                    </Button>
+                  </InputGroup>
+                  {/* <Form.Group controlId="formBasicEmail">
                     <Form.Label>Email address</Form.Label>
-                    <Form.Control type="email" placeholder="Enter email" />
+                    <Form.Control
+                      type="email"
+                      placeholder="Enter email"
+                      onChange={(event) =>
+                        this.handleEmailChange(event.target.value)
+                      }
+                    />
                     <Form.Text className="text-muted">
                       We'll never share your email with anyone else.
                     </Form.Text>
@@ -117,13 +154,21 @@ class LoginWindow extends Component {
 
                   <Form.Group controlId="formBasicPassword">
                     <Form.Label>Password</Form.Label>
-                    <Form.Control type="password" placeholder="Password" />
+                    <Form.Control
+                      type="password"
+                      placeholder="Password"
+                      onChange={(event) =>
+                        this.handlePasswordChange(event.target.value)
+                      }
+                    />
                   </Form.Group>
-                  <Form.Group controlId="formBasicCheckbox">
-                    <Form.Check type="checkbox" label="Check me out" />
-                  </Form.Group>
-                  <Button variant="primary" type="submit">
-                    Submit
+
+                  <Button
+                    variant="primary"
+                    type="button"
+                    onClick={this.onLoginButtonClick}
+                  >
+                    Login
                   </Button>
                   <Form.Group
                     style={{
@@ -133,7 +178,7 @@ class LoginWindow extends Component {
                     controlId="formBasicCheckbox"
                   >
                     <Button variant="link">New user? Sign up instead</Button>
-                  </Form.Group>
+                  </Form.Group> */}
                 </Form>
               </div>
 
