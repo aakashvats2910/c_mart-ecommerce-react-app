@@ -1,5 +1,8 @@
 import firebase from "firebase";
 import HeaderBar from "../headerbar";
+import { browserHistory } from "react-router";
+import Staticdata from "./staticjs";
+
 var firebaseui = require("firebaseui");
 
 // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -19,32 +22,149 @@ firebase.initializeApp(firebaseConfig);
 export class Fire {
   constructor() {}
 
+  static passMyOrdersInstance(mo) {
+    this.myorders = mo;
+  }
+
   static passHeaderBarInstance(hb) {
     this.headerbar = hb;
   }
 
-  // static isLoggedIn() {
-  //   var user = firebase.auth().currentUser;
-  // }
+  static passCategoryInstance(cat) {
+    this.category = cat;
+  }
+
+  static passCProductInstance(pro) {
+    this.product = pro;
+  }
+
+  static getMyOrders() {
+    console.log("FOR DATABASE UID : " + Staticdata.useruid);
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(Staticdata.useruid)
+      .collection("myorders")
+      .get()
+      .then((snapshot) => {
+        var productsArray = [];
+        var toReturnArray = [];
+        var orderIdArray = [];
+        snapshot.forEach((doc) => {
+          var productToGetData = doc.data().product;
+          console.log("Product to get : " + productToGetData);
+          productsArray.push(productToGetData);
+          orderIdArray.push(doc.id);
+        });
+
+        for (var i = 0; i <= productsArray.length - 1; i++) {
+          let k = i;
+          firebase
+            .firestore()
+            .collection("products")
+            .doc(productsArray[i])
+            .get()
+            .then((snap) => {
+              console.log("DATA : " + snap.data().name);
+              let tmp = {
+                productName: snap.data().name,
+                quantity: "1",
+                costPerQuantity: snap.data().price,
+                totalCost: snap.data().price,
+                productId: "#" + snap.id,
+                orderId: orderIdArray[k],
+              };
+              console.log("TMP : " + tmp);
+              toReturnArray.push(tmp);
+              this.myorders.setState({ itemsArray: toReturnArray });
+            });
+          console.log("LENGTH OUT : " + toReturnArray.length);
+        }
+      });
+  }
+
+  static buyThisProduct() {
+    console.log("Buying the product uid : " + Staticdata.useruid);
+    firebase
+      .firestore()
+      .collection("users")
+      .doc(Staticdata.useruid)
+      .collection("myorders")
+      .add({ product: Staticdata.product });
+  }
+
+  static searchForProductData() {
+    console.log("Searching product data");
+
+    firebase
+      .firestore()
+      .collection("products")
+      .doc(Staticdata.product)
+      .get()
+      .then((snapshot) => {
+        console.log("Snapshot got " + snapshot.data().name);
+        console.log("Snapshot got " + snapshot);
+        this.product.setState({ name: snapshot.data().name });
+        this.product.setState({ price: "₹" + snapshot.data().price });
+        this.product.setState({ description: snapshot.data().description });
+        this.product.setState({ productId: "#" + snapshot.id });
+        var disPri = snapshot.data().price;
+        disPri = disPri.replaceAll(",", "");
+        disPri = parseInt(disPri);
+        var dis = snapshot.data().discountP;
+        dis = parseInt(dis);
+        var discountedPriceToShow = Math.floor(disPri - (disPri * dis) / 100);
+        var youSaveToShow = disPri - discountedPriceToShow;
+        this.product.setState({ youSave: "₹" + youSaveToShow });
+        this.product.setState({ discountedPrice: "₹" + discountedPriceToShow });
+        this.product.setState({
+          discountP: "(" + snapshot.data().discountP + ") %",
+        });
+        // seperate the links
+        var splitedArray = snapshot.data().otherImages.split(",");
+        this.product.setState({ imagesList: splitedArray });
+
+        //description
+        var descriptionArray = snapshot.data().description.split(",");
+        this.product.setState({ description: descriptionArray });
+      });
+  }
+
+  static searchForCategoryAndSaveInStatic(category) {
+    console.log("");
+    firebase
+      .firestore()
+      .collection("products")
+      .where("category", "==", Staticdata.category)
+      .get()
+      .then((snapshot) => {
+        var toPass = [];
+        snapshot.forEach((doc) => {
+          console.log(doc.id, "=>", doc.data());
+          toPass.push({
+            name: doc.data().name,
+            description: doc.data().description,
+            discountP: doc.data().discountP,
+            imageThousand: doc.data().imageThousand,
+            uid: doc.id,
+          });
+        });
+
+        this.category.setState({ listToShow: toPass });
+      });
+  }
 
   static logout() {
     firebase.auth().signOut();
     this.headerbar.setState({
       buttonText: "Login with Google",
     });
+    Staticdata.useruid = "";
   }
 
-  static addAuthChangedListener() {
-    firebase.auth().onAuthStateChanged(function (user) {
-      if (user != null) {
-        this.headerbar.setState({
-          buttonText: user.displayName + " - Logout",
-        });
-      } else {
-        this.headerbar.setState({
-          buttonText: "Login with Google",
-        });
-      }
+  static setLoginButtonName() {
+    this.headerbar.setState({
+      buttonText: Staticdata.username + " - Logout",
     });
   }
 
@@ -55,6 +175,10 @@ export class Fire {
       .signInWithPopup(provider)
       .then((result) => {
         var uid = result.user.uid;
+        Staticdata.useruid = uid;
+        console.log("Before UID : " + uid);
+        console.log("SEt uid to : " + Staticdata.useruid);
+        Staticdata.username = result.user.displayName;
         this.headerbar.setState({
           buttonText: result.user.displayName + " - Logout",
         });

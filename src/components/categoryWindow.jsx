@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Container } from "react-bootstrap";
+import { Redirect } from "react-router-dom";
 import FooterFragment from "./footerFragment";
 import HeaderBar from "./headerbar";
 import {
@@ -13,9 +14,26 @@ import {
   CardDeck,
 } from "react-bootstrap";
 import "./css/categorywindow.css";
+import { Fire } from "./backend/firebase";
+import Staticdata from "./backend/staticjs";
+import { Link } from "react-router-dom";
 
 class CategoryWindow extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+    Fire.passCategoryInstance(this);
+    Fire.searchForCategoryAndSaveInStatic(Staticdata.category);
+    console.log("Static category: " + Staticdata.category);
+
+    this.state = {
+      listToShow: [],
+    };
+  }
+
+  handleProductCardClick(prodKey) {
+    console.log(prodKey);
+  }
+
   render() {
     return (
       <div>
@@ -43,7 +61,7 @@ class CategoryWindow extends Component {
                 <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
                   Search
                 </Breadcrumb.Item>
-                <Breadcrumb.Item active>GPU</Breadcrumb.Item>
+                <Breadcrumb.Item active>{Staticdata.category}</Breadcrumb.Item>
               </Breadcrumb>
             </Container>
             <Row>
@@ -117,7 +135,7 @@ class CategoryWindow extends Component {
                 }}
               >
                 {/* Content / catalog code goes here */}
-                <p>Search results for: 'motherboard'</p>
+                <p>Search results for: '{Staticdata.category}'</p>
                 <Container
                   style={{
                     textAlign: "left",
@@ -126,8 +144,7 @@ class CategoryWindow extends Component {
                   }}
                   fluid
                 >
-                  <CategoryProductRow></CategoryProductRow>
-                  {/* <CategoryProductRow></CategoryProductRow> */}
+                  {getCategoryProductRows(this.state.listToShow)}
                 </Container>
               </Col>
             </Row>
@@ -139,53 +156,106 @@ class CategoryWindow extends Component {
   }
 }
 
-class CategoryProductRow extends Component {
-  state = {};
-  render() {
-    return (
-      <CardDeck
-        style={{
-          marginBottom: 20,
-        }}
-      >
-        <CategoryProductCard
-          title="Product 1"
-          desc="This is the description of the product which is to be put in that area"
-          bottomText="Sales end in 3 min"
-        ></CategoryProductCard>
-        <CategoryProductCard
-          title="Product 1"
-          desc="This is the description of the product which is to be put in that area"
-          bottomText="Sales end in 3 min"
-        ></CategoryProductCard>
-        <CategoryProductCard
-          title="Product 1"
-          desc="This is the description of the product which is to be put in that area"
-          bottomText="Sales end in 3 min"
-        ></CategoryProductCard>
-        <CategoryProductCard
-          title="Product 1"
-          desc="This is the description of the product which is to be put in that area"
-          bottomText="Sales end in 3 min"
-        ></CategoryProductCard>
-      </CardDeck>
-    );
+function getCategoryProductRows(listOfCards) {
+  var total = listOfCards.length;
+  var toReturn = [];
+  var tempAr = [];
+  var toRun = 1;
+  for (let i = 0; i < total; i++) {
+    tempAr.push(listOfCards[i]);
+    console.log(toRun);
+    if (toRun == 5) {
+      let itm = <CategoryProductRow listOfCards={tempAr}></CategoryProductRow>;
+      toReturn.push(itm);
+      toRun = 1;
+      tempAr = [];
+      continue;
+    }
+    if (i == total - 1) {
+      let itm = <CategoryProductRow listOfCards={tempAr}></CategoryProductRow>;
+      toReturn.push(itm);
+      toRun = 1;
+      tempAr = [];
+      continue;
+    }
+    toRun = toRun + 1;
   }
+  console.log("To return" + toReturn.length);
+  return toReturn;
 }
+
+function getRowOfCard(listOfCards) {
+  const itemToReturn = [];
+  for (var i = 0; i < listOfCards.length; i++) {
+    const element = listOfCards[i];
+    console.log("KEY : " + element.uid);
+    let itm = (
+      <CategoryProductCard
+        title={element.name}
+        desc={element.description}
+        bottomText={"With a discount of " + element.discountP + " %"}
+        imageThousand={element.imageThousand}
+        uid={element.uid}
+      ></CategoryProductCard>
+    );
+    itemToReturn.push(itm);
+  }
+  return itemToReturn;
+}
+
+const CategoryProductRow = ({ listOfCards }) => (
+  <CardDeck
+    style={{
+      marginBottom: 20,
+    }}
+  >
+    {getRowOfCard(listOfCards)}
+  </CardDeck>
+);
 
 class CategoryProductCard extends Component {
   constructor(props) {
     super(props);
+
+    this.state = {
+      key: this.props.key,
+      redirect: false,
+    };
+
+    this.handleProductCardClick = this.handleProductCardClick.bind(this);
   }
 
-  state = {};
+  setRedirect = () => {
+    Staticdata.product = this.props.uid;
+    this.setState({
+      redirect: true,
+    });
+  };
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/product" />;
+    }
+  };
+
+  handleProductCardClick() {
+    console.log("Product key is : " + this.props.uid);
+  }
+
   render() {
     return (
-      <Card>
-        <Card.Img variant="top" src="https://i.imgur.com/rDUjBwz.png" />
+      <Card
+        style={{ width: "18rem" }}
+        onClick={console.log("Product card clicked")}
+        onClick={this.setRedirect}
+      >
+        {this.renderRedirect()}
+        {/* <Card.Img variant="top" src="https://i.imgur.com/rDUjBwz.png" /> */}
+        <Card.Img variant="top" src={this.props.imageThousand} />
         <Card.Body>
           <Card.Title>{this.props.title}</Card.Title>
           <Card.Text>{this.props.desc}</Card.Text>
+          <Card.Text>{"ABCD " + this.props.uid}</Card.Text>
         </Card.Body>
         <Card.Footer>
           <small className="text-muted">{this.props.bottomText}</small>

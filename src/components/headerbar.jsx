@@ -1,4 +1,7 @@
 import React, { Component } from "react";
+import { useHistory, withRouter } from "react-router-dom";
+import { Redirect } from "react-router-dom";
+import { Link } from "react-router";
 import {
   Navbar,
   Nav,
@@ -13,21 +16,44 @@ import ReactPlayer from "react-player";
 import "./css/headbar.css";
 import logoImg from "./img/logo.png";
 import { Fire } from "./backend/firebase";
+import Staticdata from "./backend/staticjs";
 
 class HeaderBar extends Component {
   constructor(props) {
     super(props);
 
+    this.state = {
+      headerheight: 65,
+      headerTextSize: 20,
+      buttonText: "Login with Goggle",
+      categoryToSearch: "",
+      redirect: false,
+    };
+
     Fire.passHeaderBarInstance(this);
     // Fire.addAuthChangedListener();
     this.handleLoginProcess = this.handleLoginProcess.bind(this);
+    this.handleSearchButtonClicked = this.handleSearchButtonClicked.bind(this);
+    this.setButtonName();
   }
 
-  state = {
-    headerheight: 65,
-    headerTextSize: 20,
-    buttonText: "Login with Goggle",
-  };
+  setButtonName() {
+    // if (Staticdata.username == "") {
+    //   console.log("()()()() USRNM : " + Staticdata.username);
+    //   this.state.buttonText = "Login with Google";
+    // } else {
+    //   this.state.buttonText = Staticdata.username + " - Logout";
+    // }
+    if (Staticdata.username == "") {
+      // console.log("()()()() USRNM : " + Staticdata.username);
+      // this.setState({ buttonText: Staticdata.username });
+      // this.state.buttonText = Staticdata.username;
+    } else {
+      console.log("()()()() USRNM : " + Staticdata.username);
+      // this.setState({ buttonText: Staticdata.username + " - Logout" });
+      this.state.buttonText = Staticdata.username + " - Logout";
+    }
+  }
 
   headerLinkStyle = {
     marginLeft: 20,
@@ -37,19 +63,45 @@ class HeaderBar extends Component {
     textTransform: "uppercase",
   };
 
+  setRedirect = () => {
+    console.log(this.state.categoryToSearch);
+    Staticdata.category = this.state.categoryToSearch;
+    this.setState({
+      redirect: true,
+    });
+  };
+
+  renderRedirect = () => {
+    if (this.state.redirect) {
+      return <Redirect to="/category" />;
+    }
+  };
+
   handleLoginProcess() {
     if (this.state.buttonText.includes("Logout")) {
       Fire.logout();
     } else {
       var uid = Fire.loginWithGoogle();
       console.log("()()()() UID : " + uid);
+
       // this.setState({ buttonText: "Aakash Sharma" });
     }
+  }
+
+  handleSearchtextChanged(category) {
+    this.state.categoryToSearch = category;
+  }
+
+  handleSearchButtonClicked() {
+    this.history.push("/login");
+
+    // Fire.searchForCategoryAndSaveInStatic(this.state.categoryToSearch);
   }
 
   render() {
     return (
       <div>
+        {this.renderRedirect()}
         <Navbar fixed="top" bg="dark" variant="dark">
           <Navbar.Brand href="home">
             <img
@@ -63,7 +115,7 @@ class HeaderBar extends Component {
           </Navbar.Brand>
           <Nav className="mr-auto">
             <Nav.Link href="#home">Home</Nav.Link>
-            <NavDropdown title="Shop" id="collasible-nav-dropdown">
+            {/* <NavDropdown title="Shop" id="collasible-nav-dropdown">
               <NavDropdown.Item href="#action/3.1">
                 Shop Category
               </NavDropdown.Item>
@@ -77,14 +129,29 @@ class HeaderBar extends Component {
               <NavDropdown.Item href="#action/3.4">
                 Product Checkout
               </NavDropdown.Item>
-            </NavDropdown>
-            <Nav.Link href="#pricing">My Orders</Nav.Link>
+            </NavDropdown> */}
+            <Nav.Link href="#pricing" href="/myorders">
+              My Orders
+            </Nav.Link>
 
             <Nav.Link href="#contactus">Contact Us</Nav.Link>
           </Nav>
           <Form inline>
-            <FormControl type="text" placeholder="Search" className="mr-sm-2" />
-            <Button variant="outline-light">Search</Button>
+            <FormControl
+              type="text"
+              placeholder="Search"
+              className="mr-sm-2"
+              onChange={(event) =>
+                this.handleSearchtextChanged(event.target.value)
+              }
+            />
+            <Button
+              variant="outline-light"
+              // onClick={this.handleSearchButtonClicked}
+              onClick={this.setRedirect}
+            >
+              Search
+            </Button>
 
             <Button
               variant="outline-info"

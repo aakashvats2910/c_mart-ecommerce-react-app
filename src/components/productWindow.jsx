@@ -17,6 +17,8 @@ import {
 import HeaderBar from "./headerbar";
 import "./css/productwindow.css";
 import FooterFragment from "./footerFragment";
+import Staticdata from "./backend/staticjs";
+import { Fire } from "./backend/firebase";
 
 const ColoredLine = ({ color }) => (
   <hr
@@ -35,7 +37,63 @@ const renderTooltip = (props) => (
 );
 
 class ProductWindow extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      name: "=Name=",
+      price: "=Price=",
+      discountedPrice: "",
+      description: [],
+      productId: "=dd",
+      images: "",
+      youSave: "",
+      discountP: "",
+      imagesList: [],
+    };
+
+    Fire.passCProductInstance(this);
+    Fire.searchForProductData();
+
+    console.log(Staticdata.product);
+    this.onBuyButtonClick = this.onBuyButtonClick.bind(this);
+  }
+
+  onBuyButtonClick() {
+    console.log("Buying product : " + Staticdata.product);
+    Fire.buyThisProduct();
+    window.alert("Product Done");
+  }
+
+  getImageCaraousal() {
+    var toReturn = [];
+    for (var i = 0; i <= this.state.imagesList.length - 1; i++) {
+      var elem = this.state.imagesList[i];
+      let toAdd = (
+        <Carousel.Item>
+          <img src={elem} className="showcase-mage"></img>
+        </Carousel.Item>
+      );
+      toReturn.push(toAdd);
+    }
+    return toReturn;
+  }
+
+  getDescriptionLists() {
+    var toReturn = [];
+    for (var i = 0; i <= this.state.description.length - 1; i++) {
+      var elem = this.state.description[i];
+      let toAdd = (
+        <ListGroup.Item>
+          <img src="/img/icons/tag.png" className="icon-image" />
+          &nbsp;&nbsp; {elem}
+        </ListGroup.Item>
+      );
+      toReturn.push(toAdd);
+    }
+    return toReturn;
+  }
+
   render() {
     return (
       <div>
@@ -63,9 +121,9 @@ class ProductWindow extends Component {
             >
               <Breadcrumb.Item href="#">Home</Breadcrumb.Item>
               <Breadcrumb.Item href="https://getbootstrap.com/docs/4.0/components/breadcrumb/">
-                Category
+                {Staticdata.category}
               </Breadcrumb.Item>
-              <Breadcrumb.Item active>#ProductID</Breadcrumb.Item>
+              <Breadcrumb.Item active>{this.state.productId}</Breadcrumb.Item>
             </Breadcrumb>
             <Row>
               <Col xs={5}>
@@ -75,7 +133,8 @@ class ProductWindow extends Component {
                     backgroundColor: "rgba(246,246,246, 1)",
                   }}
                 >
-                  <Carousel.Item>
+                  {this.getImageCaraousal()}
+                  {/* <Carousel.Item>
                     <img
                       src="/img/banner/pccasedemo.png"
                       className="showcase-mage"
@@ -86,7 +145,7 @@ class ProductWindow extends Component {
                       src="/img/banner/pccasedemo.png"
                       className="showcase-mage"
                     ></img>
-                  </Carousel.Item>
+                  </Carousel.Item> */}
                 </Carousel>
               </Col>
               <Col xs={4}>
@@ -99,55 +158,13 @@ class ProductWindow extends Component {
                         paddingBottom: 0,
                       }}
                     >
-                      Samsung Galaxy M02s (Blue,3GB RAM, 32GB Storage) | 5000
-                      mAh | Triple Camera
+                      {this.state.name}
                     </p>
                   </h4>
                 </Row>
                 <Card fluid>
                   <ListGroup variant="flush">
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp;Save Extra with 5 offers
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp; No Cost EMI: Avail No Cost EMI on select
-                      cards for orders above ₹3000
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp; Exchange Offer: Up to ₹ 8,400.00 off on
-                      Exchange
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp;Save Extra with 5 offers
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp;No Cost EMI: Avail No Cost EMI on select cards
-                      for orders above ₹3000
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp; Exchange Offer: Up to ₹ 8,400.00 off on
-                      Exchange
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp;Save Extra with 5 offers
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp; No Cost EMI: Avail No Cost EMI on select
-                      cards for orders above ₹3000
-                    </ListGroup.Item>
-                    <ListGroup.Item>
-                      <img src="/img/icons/tag.png" className="icon-image" />
-                      &nbsp;&nbsp; Exchange Offer: Up to ₹ 8,400.00 off on
-                      Exchange
-                    </ListGroup.Item>
+                    {this.getDescriptionLists()}
                   </ListGroup>
                 </Card>
               </Col>
@@ -174,7 +191,7 @@ class ProductWindow extends Component {
                           color: "#ff0000",
                         }}
                       >
-                        &ensp;<del>$30,000</del>
+                        &ensp;<del>{this.state.price}</del>
                       </span>
                       <br />
                       Price:{" "}
@@ -183,7 +200,7 @@ class ProductWindow extends Component {
                           fontSize: 18,
                         }}
                       >
-                        &ensp;$20,000
+                        &ensp;{this.state.discountedPrice}
                       </span>
                       <br />
                       You Save:{" "}
@@ -193,26 +210,26 @@ class ProductWindow extends Component {
                           color: "rgba(0, 177, 106, 1)",
                         }}
                       >
-                        &ensp;$10,000{" "}
+                        &ensp;{this.state.youSave}{" "}
                         <span
                           style={{
                             fontSize: 22,
                           }}
                         >
-                          (33.3%)
+                          {this.state.discountP}
                         </span>
                       </span>
                     </p>
                     <Card.Body>
                       <Form>
                         <Form.Group controlId="formBasicEmail">
-                          <Form.Label>Apply promo code</Form.Label>
-                          <Form.Control type="email" placeholder="Code" />
+                          {/* <Form.Label>Apply promo code</Form.Label>
+                          <Form.Control type="email" placeholder="Code" /> */}
                           <Form.Text className="text-muted">
-                            Get discount from applying promo code.
+                            Buy your product without any hesitation.
                           </Form.Text>
                         </Form.Group>
-                        <Button variant="outline-secondary">Apply</Button>
+                        {/* <Button variant="outline-secondary">Apply</Button> */}
                         <Row
                           style={{
                             paddingLeft: 15,
@@ -224,11 +241,12 @@ class ProductWindow extends Component {
                             style={{
                               marginRight: 10,
                             }}
+                            onClick={this.onBuyButtonClick}
                           >
                             Buy Now
                           </Button>
                         </Row>
-                        <Row
+                        {/* <Row
                           style={{
                             paddingLeft: 15,
                             paddingTop: 20,
@@ -247,7 +265,7 @@ class ProductWindow extends Component {
                               Add to cart
                             </Button>
                           </OverlayTrigger>
-                        </Row>
+                        </Row> */}
                       </Form>
                     </Card.Body>
                   </Card>

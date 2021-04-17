@@ -2,34 +2,37 @@ import React, { Component } from "react";
 import HeaderBar from "./headerbar";
 import "./css/myorderswindow.css";
 import { Container, Card, Row, Col, Badge, Button } from "react-bootstrap";
-
-var itemsArray = [
-  {
-    productName: "p1",
-    quantity: "q1",
-    costPerQuantity: "cpq1",
-    totalCost: "tc1",
-    productId: "pi1",
-  },
-  {
-    productName: "p1",
-    quantity: "q2",
-    costPerQuantity: "cpq2",
-    totalCost: "tc2",
-    productId: "pi2",
-  },
-];
+import FooterFragment from "./footerFragment";
+import { Fire } from "./backend/firebase";
+import Staticdata from "./backend/staticjs";
 
 class MyOrders extends Component {
-  state = {};
+  constructor(props) {
+    super(props);
+
+    this.state = {
+      itemsArray: [
+        {
+          productName: "p1",
+          quantity: "q1",
+          costPerQuantity: "cpq1",
+          totalCost: "tc1",
+          productId: "pi1",
+        },
+      ],
+    };
+
+    // Fire.passMyOrdersInstance(this);
+    // Fire.getMyOrders();
+  }
+
   render() {
     return (
       <div>
         <HeaderBar></HeaderBar>
         <div
           style={{
-            top: 56,
-            position: "absolute",
+            marginTop: 56,
           }}
           className="w-100"
         >
@@ -69,17 +72,11 @@ class MyOrders extends Component {
               orderNo="#DDF3322S"
               orderPlaced="March 21 2021"
               totalAmount="80,000"
-              productsList={itemsArray}
-            ></Order>
-
-            <Order
-              orderNo="#DDF3322S"
-              orderPlaced="March 21 2021"
-              totalAmount="80,000"
-              productsList={itemsArray}
+              productsList={this.state.itemsArray}
             ></Order>
           </Container>
         </div>
+        <FooterFragment></FooterFragment>
       </div>
     );
   }
